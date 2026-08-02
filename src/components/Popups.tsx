@@ -12,7 +12,7 @@ export function Popups() {
 
   const hasSeenEmail = useCallback(() => {
     try {
-      return sessionStorage.getItem(EMAIL_POPUP_KEY) === '1';
+      return localStorage.getItem(EMAIL_POPUP_KEY) === '1';
     } catch {
       return false;
     }
@@ -20,7 +20,7 @@ export function Popups() {
 
   const hasSeenExit = useCallback(() => {
     try {
-      return sessionStorage.getItem(EXIT_POPUP_KEY) === '1';
+      return localStorage.getItem(EXIT_POPUP_KEY) === '1';
     } catch {
       return false;
     }
@@ -62,7 +62,7 @@ export function Popups() {
   const closeEmailPopup = () => {
     setEmailPopup(false);
     try {
-      sessionStorage.setItem(EMAIL_POPUP_KEY, '1');
+      localStorage.setItem(EMAIL_POPUP_KEY, '1');
     } catch {
       // ignore
     }
@@ -71,7 +71,7 @@ export function Popups() {
   const closeExitPopup = () => {
     setExitPopup(false);
     try {
-      sessionStorage.setItem(EXIT_POPUP_KEY, '1');
+      localStorage.setItem(EXIT_POPUP_KEY, '1');
     } catch {
       // ignore
     }
