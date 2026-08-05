@@ -52,23 +52,21 @@ export const products: Product[] = [
     description:
       "Ta peau mérite une explosion d'éclat. NOVAE utilise la même technologie que les instituts à 150€ la séance — en 10 minutes chez toi, 7 lumières thérapeutiques redéfinissent ta peau.",
     longDescription:
-      "Le Masque LED NOVAE Pro combine 7 longueurs d'onde thérapeutiques pour cibler chaque préoccupation cutanée. La lumière rouge à 660nm pénètre le derme pour stimuler la production de collagène et d'élastine, tandis que l'infrarouge à 850nm accélère la régénération cellulaire en profondeur. Conçu en silicone médical hypoallergénique, le masque épouse les contours de votre visage pour un confort absolu. Rechargeable via USB, sans fil, il vous accompagne partout dans votre rituel beauté quotidien.",
+      "Le Masque LED NOVAE Pro combine 7 longueurs d'onde thérapeutiques pour cibler chaque préoccupation cutanée. La lumière rouge à 660nm pénètre le derme pour stimuler la production de collagène et d'élastine, tandis que l'infrarouge à 850nm accélère la régénération cellulaire en profondeur. Conçu avec des matériaux hypoallergéniques, le masque épouse les contours de votre visage pour un confort absolu. Rechargeable via USB, sans fil, il vous accompagne partout dans votre rituel beauté quotidien.",
     images: [
       '/images/masque-hero.jpg',
     ],
     features: [
       '7 couleurs thérapeutiques dont rouge 660nm + infrarouge 850nm',
       'Rechargeable USB, sans fil — usage partout',
-      'Silicone médical hypoallergénique',
+      'Matériaux hypoallergéniques, testés dermatologiquement',
       'Résultats visibles en 14 jours',
-      'Certifié CE',
       'Autonomie : 5–6 séances par charge',
     ],
     specs: [
       { label: 'Couleurs', value: '7 (Rouge 660nm, Infrarouge 850nm, Bleu, Vert, Jaune, Violet, Cyan)' },
       { label: 'Batterie', value: '400mAh rechargeable USB-C' },
-      { label: 'Matériau', value: 'Silicone médical hypoallergénique' },
-      { label: 'Certification', value: 'CE' },
+      { label: 'Matériau', value: 'Hypoallergénique, testé dermatologiquement' },
       { label: 'Session recommandée', value: '10–20 minutes' },
       { label: 'Fréquence', value: '3–5x par semaine' },
       { label: 'Compatibilité', value: 'Tous types de peau' },
@@ -140,14 +138,12 @@ export const products: Product[] = [
       'Rouge 660nm + Infrarouge 850nm',
       'Format ergonomique cou & décolleté',
       'Rechargeable USB-C',
-      'Silicone médical',
-      'Certifié CE',
+      'Matériaux hypoallergéniques',
     ],
     specs: [
       { label: 'Couleurs', value: 'Rouge 660nm + Infrarouge 850nm' },
       { label: 'Batterie', value: '400mAh rechargeable' },
-      { label: 'Matériau', value: 'Silicone médical' },
-      { label: 'Certification', value: 'CE' },
+      { label: 'Matériau', value: 'Hypoallergénique' },
     ],
     rating: 4.6,
     reviewCount: 642,

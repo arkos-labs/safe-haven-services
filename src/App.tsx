@@ -12,6 +12,7 @@ import { ConfirmationPage } from '@/pages/ConfirmationPage';
 import { AboutPage } from '@/pages/AboutPage';
 import { FaqPage } from '@/pages/FaqPage';
 import { ContactPage } from '@/pages/ContactPage';
+import { BlogPage, BlogArticlePage } from '@/pages/BlogPage';
 import { CgvPage } from '@/pages/legal/CgvPage';
 import { PrivacyPage } from '@/pages/legal/PrivacyPage';
 import { MentionsPage } from '@/pages/legal/MentionsPage';
@@ -28,7 +29,13 @@ function Routes() {
     return <ProductPage slug={slug} />;
   }
 
-switch (cleanPath) {
+  // Blog article page
+  if (cleanPath.startsWith('/blog/')) {
+    const slug = cleanPath.replace('/blog/', '');
+    return <BlogArticlePage slug={slug} />;
+  }
+
+  switch (cleanPath) {
     case '/':
       return <HomePage />;
     case '/panier':
@@ -43,6 +50,8 @@ switch (cleanPath) {
       return <FaqPage />;
     case '/contact':
       return <ContactPage />;
+    case '/blog':
+      return <BlogPage />;
     case '/cgv':
       return <CgvPage />;
     case '/politique-confidentialite':

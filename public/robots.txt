@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /checkout
+Disallow: /confirmation
+Disallow: /panier
+
+Sitemap: https://novae.fr/sitemap.xml

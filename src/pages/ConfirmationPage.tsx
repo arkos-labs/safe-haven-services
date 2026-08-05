@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Check, Package, Instagram, Plus, ArrowRight, Mail, Sparkles, Clock, Calendar } from 'lucide-react';
+import { Check, Package, Instagram, ArrowRight, Mail, Sparkles, Clock, Calendar, Plus } from 'lucide-react';
 import { useRouter } from '@/context/RouterContext';
 import { useCart } from '@/context/CartContext';
 import { products } from '@/data/products';
@@ -16,6 +16,7 @@ export function ConfirmationPage() {
   const { navigate } = useRouter();
   const { addItem } = useCart();
   const [order, setOrder] = useState<OrderData | null>(null);
+  const neckProduct = products.find((p) => p.id === 'masque-cou-decollete');
 
   useEffect(() => {
     const stored = sessionStorage.getItem('novae-last-order');
@@ -23,8 +24,6 @@ export function ConfirmationPage() {
       setOrder(JSON.parse(stored));
     }
   }, []);
-
-  const neckProduct = products.find((p) => p.id === 'masque-cou-decollete');
 
   if (!order) {
     return (
@@ -77,39 +76,26 @@ export function ConfirmationPage() {
         </div>
       </div>
 
-      {/* Post-purchase upsell */}
+
+      {/* Upsell inline — Masque Cou */}
       {neckProduct && (
-        <div className="glass-card p-6 sm:p-8 mb-8 border-or/20">
-          <div className="text-center mb-6">
-            <span className="inline-block bg-or text-noir text-xs font-bold px-3 py-1.5 rounded-full mb-3">
-              OFFRE POST-ACHAT EXCLUSIVE
-            </span>
-            <h3 className="font-display text-xl font-semibold mb-2">
-              Ajoutez le Masque Cou & Décolleté — 50% de réduction !
-            </h3>
-            <p className="text-sm text-gris-clair">
-              Le cou trahit votre âge. Traitez-le aussi, pour moitié prix.
-            </p>
-          </div>
-          <div className="flex items-center gap-4 glass-card p-4 mb-6">
-            <img src={neckProduct.images[0]} alt={neckProduct.shortName} className="w-20 h-20 rounded-xl object-cover" />
-            <div className="flex-1">
-              <h4 className="font-display font-semibold">{neckProduct.shortName}</h4>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-or font-bold text-lg">{(neckProduct.price * 0.5).toFixed(2)}€</span>
-                <span className="text-sm text-gris-fonce line-through">{neckProduct.price}€</span>
-                <span className="text-xs text-green-400 font-medium">-50%</span>
-              </div>
+        <div className="glass-card p-5 sm:p-6 mb-8 flex items-center gap-4 border-or/20">
+          <img src={neckProduct.images[0]} alt={neckProduct.shortName} className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-or font-semibold uppercase tracking-wider mb-0.5">Offre exclusive — 50% de réduction</p>
+            <h4 className="font-display font-semibold text-sm sm:text-base">{neckProduct.shortName}</h4>
+            <p className="text-xs text-gris-clair mt-0.5 mb-2">Le cou trahit votre âge — traitez-le aussi.</p>
+            <div className="flex items-baseline gap-2">
+              <span className="text-or font-bold">{(neckProduct.price * 0.5).toFixed(2)}€</span>
+              <span className="text-xs text-gris-fonce line-through">{neckProduct.price}€</span>
+              <span className="text-xs text-green-400 font-medium">-50%</span>
             </div>
           </div>
           <button
-            onClick={() => {
-              addItem(neckProduct.id, 1, neckProduct.price * 0.5);
-              navigate('/panier');
-            }}
-            className="btn-gold w-full"
+            onClick={() => { addItem(neckProduct.id, 1, neckProduct.price * 0.5); navigate('/panier'); }}
+            className="shrink-0 flex items-center gap-1.5 bg-or text-noir text-xs font-bold px-4 py-2.5 rounded-full hover:bg-or-light transition-colors"
           >
-            <Plus size={18} /> Ajouter à ma commande en cours
+            <Plus size={14} /> Ajouter
           </button>
         </div>
       )}

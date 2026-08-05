@@ -16,6 +16,7 @@ import { useCart } from '@/context/CartContext';
 import { Reveal } from '@/components/Reveal';
 import { Stars } from '@/components/Stars';
 import { products, reviews } from '@/data/products';
+import { useSEO } from '@/hooks/useSEO';
 
 const trustItems = [
   { icon: Truck, text: 'Livraison gratuite dès 50€' },
@@ -49,6 +50,11 @@ const steps = [
 ];
 
 export function HomePage() {
+  useSEO({
+    title: 'NOVAE — Masque LED Red Light Therapy | La renaissance de ta peau',
+    description: "Masque LED NOVAE Pro — 7 lumières thérapeutiques. La technologie Red Light Therapy des instituts de beauté, enfin à la maison. Résultats visibles en 14 jours. Livraison gratuite en France.",
+  });
+
   const { addItem, openCart } = useCart();
   const { navigate } = useRouter();
 
@@ -146,89 +152,6 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* C. 4 BESTSELLERS */}
-      <section id="bestsellers" className="py-20 sm:py-28 bg-creme scroll-mt-20">
-        <div className="container-luxe section-padding">
-          <Reveal>
-            <div className="text-center max-w-2xl mx-auto mb-14">
-              <p className="text-or text-sm font-semibold uppercase tracking-widest mb-3">Notre gamme</p>
-              <h2 className="font-display text-3xl sm:text-5xl font-bold mb-4 text-balance text-brun">
-                Choisissez votre rituel
-              </h2>
-              <p className="text-brun-clair leading-relaxed">
-                Chaque produit est conçu pour un effet précis. Commencez avec un seul, ou adoptez la routine complète.
-              </p>
-              <div className="divider-gold mx-auto mt-6" />
-            </div>
-          </Reveal>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {bestsellers.map(({ product, tagline, highlight }, i) => (
-              <Reveal key={product.id} delay={i * 80}>
-                <div
-                  className={`group relative flex flex-col rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl cursor-pointer ${
-                    highlight
-                      ? 'bg-white border-2 border-or/40 shadow-lg'
-                      : 'bg-white border border-creme-3/80 shadow-sm hover:border-or/30'
-                  }`}
-                  onClick={() => navigate(`/produit/${product.slug}`)}
-                >
-                  {/* Badge */}
-                  {product.badge && (
-                    <div className={`absolute top-3 left-3 z-10 text-xs font-bold px-2.5 py-1 rounded-full ${
-                      highlight ? 'bg-or text-noir' : 'bg-noir/70 text-blanc backdrop-blur-sm'
-                    }`}>
-                      {product.badge}
-                    </div>
-                  )}
-                  {highlight && (
-                    <div className="absolute top-3 right-3 z-10 bg-red-500 text-blanc text-xs font-bold px-2.5 py-1 rounded-full">
-                      -34%
-                    </div>
-                  )}
-
-                  {/* Image */}
-                  <div className="aspect-square overflow-hidden bg-creme-2">
-                    <img
-                      src={product.images[0]}
-                      alt={product.shortName}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                  </div>
-
-                  {/* Infos */}
-                  <div className="p-5 flex flex-col flex-1">
-                    <p className="text-xs text-brun-leger mb-1">{tagline}</p>
-                    <h3 className="font-display font-semibold text-brun text-base leading-snug mb-2">
-                      {product.shortName}
-                    </h3>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Stars rating={product.rating} size={13} />
-                      <span className="text-xs text-brun-leger">{product.rating} ({product.reviewCount.toLocaleString('fr-FR')})</span>
-                    </div>
-                    <div className="flex items-baseline gap-2 mt-auto mb-4">
-                      <span className="text-xl font-display font-bold text-brun">{product.price}€</span>
-                      {product.originalPrice && (
-                        <span className="text-sm text-brun-leger line-through">{product.originalPrice}€</span>
-                      )}
-                    </div>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); navigate(`/produit/${product.slug}`); }}
-                      className={`w-full flex items-center justify-center gap-2 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
-                        highlight
-                          ? 'bg-or text-noir hover:bg-or-light'
-                          : 'bg-brun/5 text-brun border border-brun/15 hover:bg-or hover:text-noir hover:border-or'
-                      }`}
-                    >
-                      Voir le produit <ArrowRight size={15} />
-                    </button>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* D. PACK ROUTINE COMPLÈTE — caché temporairement */}
       {false && <></> /* à réactiver quand sourcing prêt */}

@@ -1,8 +1,13 @@
 import { Sparkles, Heart, Shield, Check, ArrowRight } from 'lucide-react';
 import { Link } from '@/context/RouterContext';
 import { Reveal } from '@/components/Reveal';
+import { useSEO } from '@/hooks/useSEO';
 
 export function AboutPage() {
+  useSEO({
+    title: "À propos de NOVAE — La renaissance de votre peau | NOVAE",
+    description: "Découvrez notre histoire et notre mission : rendre la technologie Red Light Therapy accessible à toutes, chez soi, pour un investissement unique.",
+  });
   return (
     <div className="bg-creme min-h-screen">
 

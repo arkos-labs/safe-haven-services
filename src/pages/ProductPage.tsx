@@ -20,6 +20,7 @@ import { useRouter } from '@/context/RouterContext';
 import { Reveal } from '@/components/Reveal';
 import { Stars } from '@/components/Stars';
 import { getProduct, products, reviews } from '@/data/products';
+import { useSEO } from '@/hooks/useSEO';
 
 export function ProductPage({ slug }: { slug: string }) {
   const product = getProduct(slug);
@@ -31,6 +32,11 @@ export function ProductPage({ slug }: { slug: string }) {
   const [openSpecs, setOpenSpecs] = useState(false);
   const [viewers] = useState(() => Math.floor(Math.random() * 40) + 18);
 
+  useSEO({
+    title: product ? `${product.name} | NOVAE` : 'Produit introuvable | NOVAE',
+    description: product ? product.description : "Découvrez les produits de soin de la peau avancés de NOVAE.",
+  });
+
   if (!product) {
     return (
       <div className="container-luxe section-padding py-32 text-center">
@@ -39,6 +45,26 @@ export function ProductPage({ slug }: { slug: string }) {
       </div>
     );
   }
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.name,
+    "description": product.description,
+    "image": product.images.map((img) => (img.startsWith('http') ? img : window.location.origin + img)),
+    "offers": {
+      "@type": "Offer",
+      "price": product.price,
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "url": window.location.href,
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "5234"
+    }
+  };
 
   const serumProduct = products.find((p) => p.id === 'serum-vitamine-c');
   const crossSell = products.filter((p) => p.id !== product.id && p.category !== 'bundle').slice(0, 4);
@@ -57,6 +83,9 @@ export function ProductPage({ slug }: { slug: string }) {
 
   return (
     <div className="bg-creme min-h-screen">
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
+      </script>
 
       {/* Breadcrumb */}
       <div className="bg-creme border-b border-creme-3">
@@ -341,47 +370,6 @@ export function ProductPage({ slug }: { slug: string }) {
                 )}
               </div>
             </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── AVANT / APRÈS ─── */}
-      <section className="bg-white py-16">
-        <div className="container-luxe section-padding">
-          <Reveal>
-            <div className="text-center max-w-xl mx-auto mb-12">
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-brun mb-2">
-                Résultats réels de nos clientes
-              </h2>
-              <p className="text-xs text-brun-leger">Photos non retouchées · Utilisatrices réelles NOVAE</p>
-            </div>
-          </Reveal>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { weeks: '2 semaines', result: 'Pores resserrés, teint unifié' },
-              { weeks: '4 semaines', result: 'Ridules atténuées, peau plus ferme' },
-              { weeks: '8 semaines', result: 'Éclat visible, texture lissée' },
-            ].map((item, i) => (
-              <Reveal key={i} delay={i * 120}>
-                <div className="bg-creme-2 rounded-3xl overflow-hidden border border-creme-3 shadow-sm">
-                  <div className="grid grid-cols-2 divide-x divide-creme-3">
-                    <div className="relative aspect-square bg-creme-3">
-                      <span className="absolute top-2 left-2 text-xs font-semibold bg-white/90 text-brun px-2 py-1 rounded backdrop-blur-sm">Avant</span>
-                      {/* Placeholder visuel */}
-                      <div className="w-full h-full flex items-center justify-center text-brun-leger text-xs text-center px-2">Photo avant</div>
-                    </div>
-                    <div className="relative aspect-square bg-creme">
-                      <span className="absolute top-2 right-2 text-xs font-semibold bg-or text-noir px-2 py-1 rounded">Après</span>
-                      <div className="w-full h-full flex items-center justify-center text-brun-leger text-xs text-center px-2">Photo après</div>
-                    </div>
-                  </div>
-                  <div className="p-4 text-center">
-                    <p className="font-display font-semibold text-brun text-sm">{item.weeks}</p>
-                    <p className="text-xs text-brun-clair mt-0.5">{item.result}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
           </div>
         </div>
       </section>

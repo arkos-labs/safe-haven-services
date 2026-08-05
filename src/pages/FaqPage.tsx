@@ -3,12 +3,34 @@ import { Plus, Minus, Mail } from 'lucide-react';
 import { Link } from '@/context/RouterContext';
 import { Reveal } from '@/components/Reveal';
 import { fullFaqItems } from '@/data/products';
+import { useSEO } from '@/hooks/useSEO';
 
 export function FaqPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
+  useSEO({
+    title: "FAQ — Questions fréquentes | NOVAE",
+    description: "Tout ce que vous devez savoir sur le Masque LED NOVAE, son utilisation, la technologie Red Light Therapy, la livraison et les retours.",
+  });
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": fullFaqItems.map((item) => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.a,
+      },
+    })),
+  };
+
   return (
     <div className="bg-creme min-h-screen">
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
+      </script>
       <div className="bg-white border-b border-creme-3 py-16 sm:py-20">
         <div className="container-luxe section-padding text-center max-w-2xl">
           <Reveal>

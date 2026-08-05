@@ -2,9 +2,15 @@ import { Clock, ArrowRight, BookOpen } from 'lucide-react';
 import { Link, useRouter } from '@/context/RouterContext';
 import { Reveal } from '@/components/Reveal';
 import { blogPosts } from '@/data/products';
+import { useSEO } from '@/hooks/useSEO';
 
 export function BlogPage() {
   const { navigate } = useRouter();
+
+  useSEO({
+    title: "Le Journal — Conseils, science & rituels beauté | NOVAE",
+    description: "Tout savoir sur la Red Light Therapy, les bienfaits cliniques de la lumière rouge et nos conseils de rituels de soin du visage.",
+  });
 
   return (
     <div className="container-luxe section-padding py-16">
@@ -61,6 +67,11 @@ export function BlogPage() {
 export function BlogArticlePage({ slug }: { slug: string }) {
   const { navigate } = useRouter();
   const post = blogPosts.find((p) => p.slug === slug);
+
+  useSEO({
+    title: post ? `${post.title} | Le Journal NOVAE` : "Article introuvable | Le Journal NOVAE",
+    description: post ? post.excerpt : "Lisez nos articles sur la santé et la beauté de la peau.",
+  });
 
   if (!post) {
     return (

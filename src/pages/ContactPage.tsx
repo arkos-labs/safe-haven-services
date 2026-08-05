@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import { Mail, MessageCircle, Instagram, Check } from 'lucide-react';
 import { Reveal } from '@/components/Reveal';
+import { useSEO } from '@/hooks/useSEO';
 
 const inputClass = 'w-full bg-white border border-creme-3 rounded-xl px-4 py-3 text-brun placeholder:text-brun-leger/50 focus:border-or focus:outline-none focus:ring-2 focus:ring-or/20 transition-all text-sm';
 const labelClass = 'block text-xs font-semibold text-brun-clair uppercase tracking-wide mb-1.5';
 
 export function ContactPage() {
+  useSEO({
+    title: "Contactez-nous | NOVAE",
+    description: "Une question sur le Masque LED NOVAE ? Besoin d'assistance ? Notre service client est disponible 24/7 pour vous aider.",
+  });
+
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [sent, setSent] = useState(false);
 

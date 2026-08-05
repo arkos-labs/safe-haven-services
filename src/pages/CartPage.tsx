@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Plus,
   Minus,
@@ -7,10 +7,10 @@ import {
   Lock,
   Truck,
   Tag,
-  X,
   ArrowRight,
-  Check,
   ShieldCheck,
+  Check,
+  X,
 } from 'lucide-react';
 import { useCart, getProductById } from '@/context/CartContext';
 import { useRouter } from '@/context/RouterContext';
@@ -37,16 +37,9 @@ export function CartPage() {
   const { navigate } = useRouter();
   const [promoInput, setPromoInput] = useState('');
   const [promoError, setPromoError] = useState('');
-  const [showUpsellPopup, setShowUpsellPopup] = useState(false);
 
   const serumProduct = products.find((p) => p.id === 'serum-vitamine-c');
   const hasSerum = items.some((i) => i.productId === 'serum-vitamine-c');
-
-  useEffect(() => {
-    if (lastAddedItem && !hasSerum && serumProduct) {
-      setShowUpsellPopup(true);
-    }
-  }, [lastAddedItem, hasSerum, serumProduct]);
 
   const handleApplyPromo = (e: React.FormEvent) => {
     e.preventDefault();
@@ -232,56 +225,31 @@ export function CartPage() {
         </div>
       </div>
 
-      {/* Upsell popup */}
-      {showUpsellPopup && serumProduct && !hasSerum && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-lg glass-card p-8 animate-scale-in border-or/20">
-            <button
-              onClick={() => setShowUpsellPopup(false)}
-              className="absolute top-4 right-4 text-gris-clair hover:text-blanc transition-colors"
-              aria-label="Fermer"
-            >
-              <X size={22} />
-            </button>
-            <div className="text-center mb-6">
-              <span className="inline-block bg-or text-noir text-xs font-bold px-3 py-1.5 rounded-full mb-4">
-                AVANT DE FINALISER
-              </span>
-              <h3 className="font-display text-2xl font-bold mb-2">Complétez votre rituel !</h3>
-              <p className="text-gris-clair text-sm">
-                Ajoutez le Sérum Vitamine C à -30% — uniquement dans le panier
-              </p>
-            </div>
-            <div className="flex items-center gap-4 glass-card p-4 mb-6">
-              <img src={serumProduct.images[0]} alt={serumProduct.shortName} className="w-20 h-20 rounded-xl object-cover" />
-              <div className="flex-1">
-                <h4 className="font-display font-semibold">{serumProduct.shortName}</h4>
-                <p className="text-xs text-gris-clair mb-2">Après la séance, votre peau absorbe les actifs 3x mieux. Profitez-en.</p>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-or font-bold text-lg">{(serumProduct.price * 0.7).toFixed(2)}€</span>
-                  <span className="text-sm text-gris-fonce line-through">{serumProduct.price}€</span>
-                  <span className="text-xs text-green-400 font-medium">-30%</span>
-                </div>
+      {/* Upsell inline — Sérum */}
+      {serumProduct && !hasSerum && (
+        <Reveal>
+          <div className="mt-8 glass-card p-5 sm:p-6 flex items-center gap-4 border-or/20">
+            <img src={serumProduct.images[0]} alt={serumProduct.shortName} className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-xs text-or font-semibold uppercase tracking-wider mb-0.5">Ajoutez à votre commande</p>
+              <h4 className="font-display font-semibold text-sm sm:text-base">{serumProduct.shortName}</h4>
+              <p className="text-xs text-gris-clair mt-0.5 mb-2">Absorb. 3× plus rapide après séance</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-or font-bold">{(serumProduct.price * 0.7).toFixed(2)}€</span>
+                <span className="text-xs text-gris-fonce line-through">{serumProduct.price}€</span>
+                <span className="text-xs text-green-400 font-medium">-30%</span>
               </div>
             </div>
             <button
-              onClick={() => {
-                addItem(serumProduct.id, 1, serumProduct.price * 0.7);
-                setShowUpsellPopup(false);
-              }}
-              className="btn-gold w-full mb-3"
+              onClick={() => addItem(serumProduct.id, 1, serumProduct.price * 0.7)}
+              className="shrink-0 flex items-center gap-1.5 bg-or text-noir text-xs font-bold px-4 py-2.5 rounded-full hover:bg-or-light transition-colors"
             >
-              <Check size={18} /> Ajouter à -30%
-            </button>
-            <button
-              onClick={() => setShowUpsellPopup(false)}
-              className="text-xs text-gris-fonce hover:text-gris-clair transition-colors w-full text-center"
-            >
-              Non merci, je finalise sans
+              <Plus size={14} /> Ajouter
             </button>
           </div>
-        </div>
+        </Reveal>
       )}
+
     </div>
   );
 }
